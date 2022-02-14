@@ -13,7 +13,7 @@ build:
   entry_points:
     - email2pdf2=email2pdf2.cmd:main
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
@@ -29,6 +29,7 @@ requirements:
     - pypdf3
     - python-magic
     - reportlab
+    - wkhtmltopdf
 
 test:
   imports:
