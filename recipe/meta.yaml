@@ -6,22 +6,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 5f12318c0e5dea421134ee3ba7c1bc1c3df312866089a5ef077ecb15d2983d87
 
 build:
   entry_points:
     - email2pdf2=email2pdf2.cmd:main
   noarch: python
-  number: 1
+  number: 2
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - chardet
     - beautifulsoup4 >=4.6.3
     - html5lib
@@ -36,6 +36,7 @@ test:
     - email2pdf2
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
     - email2pdf2 --help
