@@ -1,0 +1,68 @@
+schema_version: 1
+
+context:
+  name: email2pdf2
+  version: "0.0.3"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: 5f12318c0e5dea421134ee3ba7c1bc1c3df312866089a5ef077ecb15d2983d87
+
+build:
+  number: 3
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+  python:
+    entry_points:
+      - email2pdf2=email2pdf2.cmd:main
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - chardet
+    - beautifulsoup4 >=4.6.3
+    - html5lib
+    - lxml
+    - pypdf3
+    - python-magic
+    - reportlab
+    - wkhtmltopdf
+
+tests:
+  - python:
+      imports:
+        - email2pdf2
+      pip_check: true
+      python_version: ${{ python_min }}
+  - requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+    script:
+      - email2pdf2 --help
+
+about:
+  license: MIT
+  license_file: LICENSE.txt
+  summary: email2pdf2 is a Python script to convert emails to PDF from the command-line.
+  description: |
+    Script to convert emails to PDF from the command-line, as well as
+    detach recognized attachments. Helps to process incoming emails and
+    assist automatically with a non-paper paperwork workflow. Designed to
+    work in tandem with getmail to convert forwarded emails to PDF
+    automatically.
+  homepage: https://github.com/pyscioffice/email2pdf2
+  repository: https://github.com/pyscioffice/email2pdf2
+  documentation: https://github.com/pyscioffice/email2pdf2
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
